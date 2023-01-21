@@ -1,0 +1,17 @@
+# Create Virtual ENV
+virtualenv --python python3 venv
+
+# Activate the Virtual ENV
+source venv/bin/activate
+
+# Requirements
+pip freeze > requirements.txt
+pip install -r requirements.txt
+
+# leave Virtual ENV
+deactivate
+
+
+
+# Links
+# https://flask.palletsprojects.com/en/2.2.x/quickstart/
