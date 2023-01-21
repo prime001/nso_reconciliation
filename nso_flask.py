@@ -1,10 +1,23 @@
+__author__ = "Erik Anderson"
+__license__ = "GPL"
+__version__ = "1.0.0"
+__maintainer__ = "Erik Anderson"
+__email__ = "primex001@gmail.com"
+__status__ = "Development"
+
 from flask import Flask, send_file, render_template
 from flask import request
 import json
+import sqlite3
 
 service = {'some': 'Data'}
 
 app = Flask(__name__)
+
+def get_db_connection():
+    conn = sqlite3.connect('nso_rec.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
 @app.route("/")
 def welcome(name='test'):
@@ -55,3 +68,43 @@ def login():
 #         return send_file(zipped, as_attachment=True)
 #     else:
 #         return render_template("config_gen.html")
+
+# @app.route('/database')
+# def database():
+#     conn = get_db_connection()
+#     posts = conn.execute('SELECT * FROM posts').fetchall()
+#     conn.close()
+#     return render_template('index.html', posts=posts)
+
+# Edit example:
+# @app.route('/<int:id>/edit', methods=('GET', 'POST'))
+# def edit(id):
+#     post = get_post(id)
+
+#     if request.method == 'POST':
+#         title = request.form['title']
+#         content = request.form['content']
+
+#         if not title:
+#             flash('Title is required!')
+#         else:
+#             conn = get_db_connection()
+#             conn.execute('UPDATE posts SET title = ?, content = ?'
+#                          ' WHERE id = ?',
+#                          (title, content, id))
+#             conn.commit()
+#             conn.close()
+#             return redirect(url_for('index'))
+
+#     return render_template('edit.html', post=post)
+
+# Flask Send E-mail
+# from flask_mail import Message
+
+# @app.route("/")
+# def index():
+
+#     msg = Message("Hello",
+#                   sender="from@example.com",
+#                   recipients=["to@example.com"])
+# mail.send(msg)

@@ -11,7 +11,35 @@ pip install -r requirements.txt
 # leave Virtual ENV
 deactivate
 
+# Debug Flask app
+flask --app nso_flask.py --debug run
 
+# Perma Run Flask
+flask --app hello.py run
 
 # Links
 # https://flask.palletsprojects.com/en/2.2.x/quickstart/
+
+# Convert Json -> sqlite3
+import json
+import sqlite3
+
+connection = sqlite3.connect('db.sqlite')
+cursor = connection.cursor()
+cursor.execute('Create Table if not exists Student (name Text, course Text, roll Integer)')
+
+traffic = json.load(open('json_file.json'))
+columns = ['name','course','roll']
+for row in traffic:
+    keys= tuple(row[c] for c in columns)
+    cursor.execute('insert into Student values(?,?,?)',keys)
+    print(f'{row["name"]} data inserted Succefully')
+
+connection.commit()
+connection.close()
+
+# Whats different between json.load & json.loads
+What is the difference between json.load() and json.loads() functions
+The only diffence between the json.load() and json.loads() funciton is that json.load() 
+funtion convert the json file data into a string and json.loads() funciotn convert the 
+json file data into python dictionay object.
